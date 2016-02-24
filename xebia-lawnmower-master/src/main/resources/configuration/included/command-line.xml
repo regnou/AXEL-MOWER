@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:p="http://www.springframework.org/schema/p"
+        xmlns:util="http://www.springframework.org/schema/util"
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd 
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+            http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util-3.1.xsd"
+        >
+    <context:annotation-config />
+    <context:component-scan base-package="cma.xebia.lawnmower" />
+    <aop:aspectj-autoproxy />
+    
+    <bean   id="command-line.arguments.file"
+            class="cma.xebia.lawnmower.application.cmd.argument.impl.LawnMowerCtlFileArgument"
+            scope="prototype" >
+        <constructor-arg type="java.lang.String" value="file" />
+    </bean>
+    
+    <bean   id="command-line.arguments.resource"
+            class="cma.xebia.lawnmower.application.cmd.argument.impl.LawnMowerCtlResourceArgument"
+            scope="prototype" >
+        <constructor-arg type="java.lang.String" value="resource" />
+    </bean>
+    
+    <bean   id="command-line.arguments.select-controller"
+            class="cma.xebia.lawnmower.application.cmd.argument.impl.MainAppControllerArgument"
+            scope="singleton" >
+        <constructor-arg type="java.lang.String" value="mode" />
+        <constructor-arg >
+            <map>
+                <entry key="standard"   value="lawn-mower.controller.standard" />
+                <entry key="broken"     value="lawn-mower.controller.broken-down" />
+                <entry key="threaded"   value="lawn-mower.controller.threaded" />
+            </map>
+        </constructor-arg>
+    </bean>
+    
+    <bean   id="command-line.arguments.help"
+            class="cma.xebia.lawnmower.application.cmd.argument.impl.LawnMowerHelpArgument"
+            scope="singleton" >
+        <constructor-arg type="java.lang.String" value="help" />
+        <constructor-arg ref="utils.printer.resource-to-sysout" />
+        <constructor-arg type="java.lang.String" value="/cmd/help.txt" />
+    </bean>
+    
+    <bean   id="command-line.ctl.arguments"
+            class="cma.xebia.lawnmower.utils.cmd.argument.impl.SimpleArguments"
+            scope="prototype" >
+        <constructor-arg>
+            <set>
+                <ref bean="command-line.arguments.file"/>
+                <ref bean="command-line.arguments.resource"/>
+                <ref bean="command-line.arguments.help"/>
+            </set>
+        </constructor-arg>
+        <constructor-arg ref="command-line.arguments.help"/>
+    </bean>
+    
+    
+    <bean   id="command-line.main.arguments"
+            class="cma.xebia.lawnmower.utils.cmd.argument.impl.SimpleArguments"
+            scope="prototype" >
+        <constructor-arg>
+            <set>
+                <ref bean="command-line.arguments.select-controller"/>
+            </set>
+        </constructor-arg>
+        <constructor-arg ref="command-line.arguments.help"/>
+    </bean>
+    
+    <bean   id="command-line.ctl.template"
+            class="cma.xebia.lawnmower.utils.cmd.template.impl.ResourceTemplate"
+            scope="prototype" >
+        <constructor-arg ref="utils.printer.resource-to-sysout"/>
+        <constructor-arg value="/cmd/header.txt" />
+        <constructor-arg value="/cmd/footer.txt" />
+    </bean>
+    
+</beans>

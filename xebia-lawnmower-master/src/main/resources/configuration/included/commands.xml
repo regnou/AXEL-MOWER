@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:p="http://www.springframework.org/schema/p"
+        xmlns:util="http://www.springframework.org/schema/util"
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd 
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+            http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util-3.1.xsd"
+        >
+    <context:annotation-config />
+    <context:component-scan base-package="cma.xebia.lawnmower" />
+    <aop:aspectj-autoproxy />
+    
+    <bean   id="commands.A"
+            class="cma.xebia.lawnmower.business.entity.lawnmower.commands.impl.A"
+            scope="prototype" />
+    <bean   id="commands.D"
+        class="cma.xebia.lawnmower.business.entity.lawnmower.commands.impl.D"
+        scope="prototype" />
+    <bean   id="commands.G"
+        class="cma.xebia.lawnmower.business.entity.lawnmower.commands.impl.G"
+        scope="prototype" />
+    
+    <bean   id="commands.lawn-mower"
+            class="cma.xebia.lawnmower.business.entity.lawnmower.commands.impl.DefaultCommands"
+            scope="prototype" >
+        <property name="movements">
+            <map>
+                <entry 
+                    key="#{T(cma.xebia.lawnmower.business.entity.constants.Movement).A}"
+                    value-ref="commands.A" />
+                <entry key="#{T(cma.xebia.lawnmower.business.entity.constants.Movement).D}"
+                    value-ref="commands.D" />
+                <entry key="#{T(cma.xebia.lawnmower.business.entity.constants.Movement).G}"
+                    value-ref="commands.G" />
+            </map>
+        </property>
+    </bean>
+    
+    
+</beans>

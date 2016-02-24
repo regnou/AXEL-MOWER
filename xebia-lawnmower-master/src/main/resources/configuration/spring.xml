@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:p="http://www.springframework.org/schema/p"
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd 
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+        >
+    <context:annotation-config />
+    <context:component-scan base-package="cma.xebia.lawnmower" />
+    <aop:aspectj-autoproxy />
+    
+    <import resource="classpath:configuration/included/command-line.xml" />
+    <import resource="classpath:configuration/included/utils.xml" />
+    <import resource="classpath:configuration/included/validators.xml" />
+    <import resource="classpath:configuration/included/commands.xml" />
+    <import resource="classpath:configuration/included/process.xml" />
+    <import resource="classpath:configuration/included/lawn-mower.xml" />
+    
+    <bean   id="lawn-mower.controller.base"
+            abstract="true" >
+        <constructor-arg name="arguments"   ref="command-line.ctl.arguments" />
+        <constructor-arg name="template"    ref="command-line.ctl.template" />
+        <constructor-arg name="reader"      ref="utils.description.parser" />
+        <constructor-arg name="builder"     ref="lawn-mower.builder.standard" />
+    </bean>
+    
+    <bean   id="lawn-mower.controller.standard"
+            class="cma.xebia.lawnmower.controller.impl.LawnMowerController"
+            parent="lawn-mower.controller.base"
+            scope="prototype" >
+        <constructor-arg name="shearer" ref="process.shearer.standard" />
+    </bean>
+    
+    <bean   id="lawn-mower.controller.threaded"
+            class="cma.xebia.lawnmower.controller.impl.LawnMowerController"
+            parent="lawn-mower.controller.base"
+            scope="prototype" >
+        <constructor-arg name="builder"     ref="lawn-mower.builder.threaded" />
+        <constructor-arg name="shearer" ref="process.shearer.threaded" />
+    </bean>
+    
+    <bean   id="lawn-mower.controller.broken-down"
+            class="cma.xebia.lawnmower.controller.impl.LawnMowerController"
+            parent="lawn-mower.controller.base"
+            scope="prototype" >
+        <constructor-arg name="shearer" ref="process.shearer.broken-down" />
+    </bean>
+    
+</beans>

@@ -1,0 +1,43 @@
+
+Usage en ligne de commande
+    A) Compilation à partir des sources
+        *) `mvn clean install`
+        *) `mvn package`
+        
+        La seconde commande crée un jar exécutable, avec toutes les dépendances.
+        Ce jar est stocké à :
+            target/cma-xebia-lawnmower-${majorVersion}.${minorVersion}-full.jar
+        
+    B) Exécution
+        `java -jar cma-xebia-lawnmower-1.2-full.jar [${args}]`
+         Où ${args} est :
+            *) --help : ce message
+            *) --mode=[standard|broken|threaded]
+                - standard  : no thread
+                - threaded  : use one thread by lawn mower
+                - broken    : hum ... it's broken !!
+            *) --file="${path/to/file}" : utilisation d'un fichier de configuration externe
+            *) --resource="${path/to/resource}" : utilisation d'une configuration embarquée
+                Avec deux possibilité :
+                    - Sans obstacle : /lawnmower.desc
+                    - Avec obstacle : /lawnmower+obstacles.desc
+        
+        
+        Si ${arg} est omis, le programme s'exécute avec l'option --resource="/lawnmower.desc"
+        
+Example:
+    1) Configuration par défaut (implicite)
+        `java -jar cma-xebia-lawnmower-1.2-full.jar`
+    
+    2) Chargement d'un fichier de configuration externe
+        `java -jar cma-xebia-lawnmower-1.2-full.jar --file=/home/user/lawnmower.desc`
+    
+    3) Configuration par défaut (explicite)
+        `java -jar cma-xebia-lawnmower-1.2-full.jar --resource=/lawnmower.desc`
+    
+    4) Configuration avec des obstacles
+        `java -jar cma-xebia-lawnmower-1.2-full.jar --resource=/lawnmower+obstacles.desc`
+    
+    5) Ce message
+        `java -jar cma-xebia-lawnmower-1.2-full.jar --help`
+    

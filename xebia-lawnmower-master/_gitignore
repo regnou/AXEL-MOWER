@@ -1,0 +1,6 @@
+*target*
+*.jar
+*.war
+*.ear
+*.class
+nb-configuration.xml
