@@ -1,0 +1,228 @@
+<html>
+	<head>
+		<title>SmartTextBox demos | wayofspark.com </title>
+		<script charset="utf-8" type="text/javascript" src="jquery.js"></script>
+
+		<link charset="utf-8" media="screen" type="text/css" href="../prettify/prettify.css" rel="stylesheet"/>
+		<script charset="utf-8" type="text/javascript" src="../prettify/prettify.js"></script>
+		
+		<link charset="utf-8" media="screen" type="text/css" href="SmartTextBox.css" rel="stylesheet"/>
+		<script charset="utf-8" type="text/javascript" src="SmartTextBox.js"></script>
+		
+		<style type="text/css" media="screen">
+			.smartTextBox{
+				width: 500px;
+			}
+			p { margin: 5px 0px; padding: 0; }
+			.apiTable input {
+				width: 200px;
+			}
+			.info {
+				font-weight: bold;
+				color : blue;
+			}
+			.hidden {
+				display: none;
+			}
+			pre {
+				width: 500px;
+				overflow-x: scroll;
+				padding: 5px !important;
+			}
+			.showCode {
+			
+			}
+		</style>
+	</head>
+	
+<body>
+
+<h1>SmartTextBox demos</h1>
+<script type="text/javascript">
+$(document).ready(function(){
+	prettyPrint();
+});
+</script>
+
+<p><a href="http://wayofspark.com/projects/smarttextbox">SmartTextBox project page</a></p>
+		
+<!-- DEMO 1 -->
+<h2>Standard with enter submit</h2>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#testContainer").smartTextBox({submitKeys : [13],submitChars : []});
+	});
+</script>
+<input id="testContainer" value="lorem;ipsum" />
+<p>Type some text then press enter to create a box</p>
+<a class="showCode" href="#" onclick="$('#demoCode1').show(); return false;">Click here to see the code</a>
+<pre id="demoCode1" class="prettyprint hidden">
+$(document).ready(function(){
+  $("#testContainer").smartTextBox({submitKeys : [13],submitChars : []});
+});</pre>
+		
+<!-- DEMO 2 -->
+<h2>Standard with comma and semicolon submit</h2>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#testContainer2").smartTextBox({submitKeys : [],submitChars : [",",";"]});
+	});
+</script>
+<input id="testContainer2" value="john;woo" />
+<p>Type some text then press ',' or ";" to create a box</p>
+<a class="showCode" href="#" onclick="$('#demoCode2').show(); return false;">Click here to see the code</a>
+<pre id="demoCode2" class="prettyprint hidden">
+$(document).ready(function(){
+  $("#testContainer2").smartTextBox({submitKeys : [],submitChars : [",",";"]});
+});</pre>
+		
+<!-- DEMO 3 -->
+<h2>Autocompletion</h2>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var autoVals = ["lorem", "ipsum", "dummy", "john", "woo", "browser", "sunrise", "loras", "lorim"];
+		$("#testContainer3").smartTextBox({autocompleteValues: autoVals});
+	});
+</script>
+<input id="testContainer3" value="john;woo" />
+<p>Start typing some text to see the autocomplete suggestions.</p>
+<p>Values are : ["lorem", "ipsum", "dummy", "john", "woo", "browser", "sunrise", "loras", "lorim"];</p>
+<a class="showCode" href="#" onclick="$('#demoCode3').show(); return false;">Click here to see the code</a>
+<pre id="demoCode3" class="prettyprint hidden">
+$(document).ready(function(){
+  var autoVals = ["lorem", "ipsum", "dummy", "john", "woo", "browser", "sunrise", "loras", "lorim"];
+  $("#testContainer3").smartTextBox({autocompleteValues: autoVals});
+});</pre>
+
+<!--  DEMO4 -->
+<h2>API calls</h2>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#testContainer4").smartTextBox();
+		$("#testContainer4").smartTextBox("load", ['john', 'woo', 'padawan' ]); 
+	});
+	function addBox() {
+		var val = prompt("Enter new box value");
+		if(val) $('#testContainer4').smartTextBox('add', val);
+	}
+	function removeBox() {
+		var val = prompt("Enter value or index of box to remove");
+		if(val) $('#testContainer4').smartTextBox('remove', val);
+	}	
+	function removeAll() {
+		$('#testContainer4').smartTextBox('clear');
+	}
+	function setAll() {
+		var val = prompt("Enter values of boxes, separated by ';'");
+		if(val) $('#testContainer4').smartTextBox('load', val);
+	}
+	function setAutocomplete() {
+		var val = prompt("Enter values of autocomplete options, separated by ';'");
+		if(val) $('#testContainer4').smartTextBox('autocomplete', val);
+	}	
+</script>
+<input id="testContainer4" value="" />
+<p>Choose an action :</p>
+<div class="apiTable">
+	<input type="button" value="add a box" onclick="addBox();"/>
+	<br/>
+	<input type="button" value="remove a box" onclick="removeBox();"/>
+	<br/>
+	<input type="button" value="remove all boxes" onclick="removeAll();"/>
+	<br/>
+	<input type="button" value="set all boxes" onclick="setAll();"/>
+	<br/>
+	<input type="button" value="set autocomplete values" onclick="setAutocomplete();"/>
+</div>
+<a class="showCode" href="#" onclick="$('#demoCode4').show(); return false;">Click here to see the code</a>
+<pre id="demoCode4" class="prettyprint hidden">
+$(document).ready(function(){
+	$("#testContainer4").smartTextBox();
+	$("#testContainer4").smartTextBox("load", ['john', 'woo', 'padawan' ]); 
+});
+function addBox() {
+	var val = prompt("Enter new box value");
+	if(val) $('#testContainer4').smartTextBox('add', val);
+}
+function removeBox() {
+	var val = prompt("Enter value or index of box to remove");
+	if(val) $('#testContainer4').smartTextBox('remove', val);
+}	
+function removeAll() {
+	$('#testContainer4').smartTextBox('clear');
+}
+function setAll() {
+	var val = prompt("Enter values of boxes, separated by ';'");
+	if(val) $('#testContainer4').smartTextBox('load', val);
+}
+function setAutocomplete() {
+	var val = prompt("Enter values of autocomplete options, separated by ';'");
+	if(val) $('#testContainer4').smartTextBox('autocomplete', val);
+}</pre>
+
+<!--  DEMO 5 -->
+<h2>Original input value test (pipe separator)</h2>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#testContainer5").smartTextBox({separator : "|"});
+	});
+	function showOrigInputValue() {
+		$('#origInputP').show();
+		$('#origInputValue').text($('#testContainer5').val())
+	}
+</script>
+<input id="testContainer5" value="piped|separator" />
+<br />
+<p>Add or remove boxes then click <input type="button" value="here" onclick="showOrigInputValue();"/> to see the updated input value.</p>
+<p class="info" id='origInputP' style="display: none;">The original input value = '<span id="origInputValue"></span>'</p>
+<a class="showCode" href="#" onclick="$('#demoCode5').show(); return false;">Click here to see the code</a>
+<pre id="demoCode5" class="prettyprint hidden">
+$(document).ready(function(){
+	$("#testContainer5").smartTextBox({separator : "|"});
+});
+function showOrigInputValue() {
+	$('#origInputP').show();
+	$('#origInputValue').text($('#testContainer5').val())
+}</pre>
+
+<!-- DEMO 6 -->
+<h2>Events handling</h2>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#testContainer6").smartTextBox({
+			onElementAdd : function(el, stb) {
+				$("#demo6writer").text("Added an element with label : " + el.getValue());	
+			},
+			onElementRemove : function(el, stb) {
+				$("#demo6writer").text("Removed an element with label : " + el.getValue());
+			}
+		});
+	});
+</script>
+<input id="testContainer6" value="" />
+<p>Add or remove boxes to see custom event handling</p>
+<p class="info" id="demo6writer"></p>
+<a class="showCode" href="#" onclick="$('#demoCode6').show(); return false;">Click here to see the code</a>
+<pre id="demoCode6" class="prettyprint hidden">
+$(document).ready(function(){
+	$("#testContainer6").smartTextBox({
+		onElementAdd : function(el, stb) {
+			$("#demo6writer").text("Added an element with label : " + el.getValue());	
+		},
+		onElementRemove : function(el, stb) {
+			$("#demo6writer").text("Removed an element with label : " + el.getValue());
+		}
+	});
+});</pre>
+
+<!--  ABOUT -->
+<h2>Read more</h2>
+<p>Details about the plugin and the API can be found <a href="http://wayofspark.com/projects/smarttextbox">on the project page</a></p>
+
+<!--  Copyright -->
+<div align="center">
+	<p>SmartTextBox - Pierre Gayvallet &copy; 2009-2010</p>
+</div>
+
+</body>
+</html>
