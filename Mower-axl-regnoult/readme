@@ -1,0 +1,9 @@
+
+
+
+At home, I use this command line to execute the jar :
+
+java -jar C:\KEPLER-WS\Mower\mower.jar "D:\testFile"
+
+
+
